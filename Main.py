@@ -24,7 +24,7 @@ class Main(tk.Frame): # основное рабочее окно
         Main.main_board = tk.Frame(bg=Main.back_color, height=int(Main.y / 20), bd=5)
         Main.society_board = tk.Frame(bg='#E8E8E8', width=int(Main.x / 6.12), bd=5)
         Main.send_board = tk.Frame(bg='#E8E8E8', height=int(Main.y / 6), width=int(Main.x / 2), bd=5)
-        Main.message_board = tk.Canvas(bg='#E8E8E8', height=int(Main.y / 2.28), width=int(Main.x / 2.01))
+        Main.message_board = tk.Frame(bg='#E8E8E8', height=int(Main.y / 2.25), width=int(Main.x / 2))
 
         # ---создаем кнопки, которые будут вызываться вне класса-------
         Main.new_message_but = tk.Button(Main.main_board, text='создать диалог', bg='#5B5B5B'
@@ -39,9 +39,6 @@ class Main(tk.Frame): # основное рабочее окно
         Main.send_but = tk.Button(Main.send_board, image=self.image,
                             height=32, width=32, bd=0,
                             command=lambda : Message.send_mes(None))
-        scrollbar = tk.Scrollbar(Main.message_board, orient="vertical", command=Main.message_board.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        #Main.message_board['yscrollcommand'] = scrollbar.set
 
         # ---отрисовываем все необходимое------------------------------
 
@@ -126,11 +123,7 @@ class Message(tk.Toplevel): # все, что связанно с сообщен�
             mess_keeper.sort(key=lambda date: date[-19:-9])
 
             for widget in Main.message_board.winfo_children():
-                try:
-                    if widget['text'] != None:
-                        widget.destroy()
-                except:
-                    None
+                widget.destroy()
 
             for message in  mess_keeper:
                 if Message.saved_id in message[2:7] or Message.saved_id in message[11:16]:
